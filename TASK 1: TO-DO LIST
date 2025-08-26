@@ -1,0 +1,86 @@
+# To-Do List Application
+
+def display_menu():
+    """Displays the main menu options for the To-Do List."""
+    print("\n--- To-Do List Menu ---")
+    print("1. Add a task")
+    print("2. View all tasks")
+    print("3. Mark a task as complete")
+    print("4. Delete a task")
+    print("5. Exit")
+
+def add_task(todo_list):
+    """Prompts the user to add a new task."""
+    task = input("Enter the task: ")
+    todo_list[task] = "Incomplete"
+    print(f"Task '{task}' added.")
+
+def view_tasks(todo_list):
+    """Displays all tasks with their completion status."""
+    if not todo_list:
+        print("Your to-do list is empty.")
+        return
+    
+    print("\n--- Your To-Do List ---")
+    for i, (task, status) in enumerate(todo_list.items(), 1):
+        print(f"{i}. {task} - [{status}]")
+
+def mark_complete(todo_list):
+    """Marks a task as complete based on its number."""
+    view_tasks(todo_list)
+    if not todo_list:
+        return
+    
+    try:
+        task_num = int(input("Enter the number of the task to mark as complete: "))
+        tasks = list(todo_list.keys())
+        if 1 <= task_num <= len(tasks):
+            task_name = tasks[task_num - 1]
+            todo_list[task_name] = "Complete"
+            print(f"Task '{task_name}' marked as complete.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+def delete_task(todo_list):
+    """Deletes a task based on its number."""
+    view_tasks(todo_list)
+    if not todo_list:
+        return
+    
+    try:
+        task_num = int(input("Enter the number of the task to delete: "))
+        tasks = list(todo_list.keys())
+        if 1 <= task_num <= len(tasks):
+            task_name = tasks.pop(task_num - 1)
+            del todo_list[task_name]
+            print(f"Task '{task_name}' deleted.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+def main():
+    """Main function to run the To-Do List application."""
+    todo_list = {}
+    while True:
+        display_menu()
+        choice = input("Enter your choice (1-5): ")
+        
+        if choice == '1':
+            add_task(todo_list)
+        elif choice == '2':
+            view_tasks(todo_list)
+        elif choice == '3':
+            mark_complete(todo_list)
+        elif choice == '4':
+            delete_task(todo_list)
+        elif choice == '5':
+            print("Exiting the application. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number from 1 to 5.")
+
+if __name__ == "__main__":
+    main()
